@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Paths.js examples</title>
+
+    <script src="lib/paths.js"></script>
+    <script src="lib/ractive.min.js"></script>
+    <script src="lib/JSXTransformer.js"></script>
+    <script src="lib/react.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+  </head>
+  <body class="container">
+    <div class="row">
+      <div id="ractive" class="col-md-6"></div>
+      <div id="react" class="col-md-6"></div>
+    </div>
+    <div class="row" ng-app="paths">
+      <div id="angular" class="col-md-6" ng-controller="PathCtrl">
+
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h2 class="panel-title">Angular.js</h2>
+          </div>
+
+          <div class="panel-body">
+            <p class="alert alert-info">Here we track the mouse position.</p>
+
+            <svg width="400" height="400">
+              <path ng-repeat="curve in graph.curves"
+                d="{{ curve.line.path.print() }}"
+                fill="none"
+                stroke="{{ curve.index ? 'grey': 'red' }}" />
+            </svg>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+
+
+    <script id="ractive-template" type="text/ractive">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title">Ractive.js</h2>
+        </div>
+
+        <div class="panel-body">
+          <p class="alert alert-info">Here is a radar chart showing Pokémon stats. Try changing Pokémon.</p>
+
+          <select value='{{ pokemon }}'>
+            {{# names:num }}
+              <option value='{{ num }}'>{{ . }}</option>
+            {{/ names }}
+          </select>
+
+          {{# data }}
+            <div class="pokemon-info">
+              <h4>{{ name }}</h4>
+              <p>HP: <span class="label label-info">{{ Math.floor(hp) }}</span></p>
+              <p>Attack: <span class="label label-info">{{ Math.floor(attack) }}</span></p>
+              <p>Defense: <span class="label label-info">{{ Math.floor(defense) }}</span></p>
+              <p>Sp. Attack: <span class="label label-info">{{ Math.floor(sp_attack) }}</span></p>
+              <p>Sp. Defense: <span class="label label-info">{{ Math.floor(sp_defense) }}</span></p>
+              <p>Speed: <span class="label label-info">{{ Math.floor(speed) }}</span></p>
+            </div>
+          {{/ data }}
+
+          <svg width=375 height=400>
+            <g transform="translate(200,200)">
+              {{# Radar({center: center, r: r, data: data, accessor: accessor, max: max}) }}
+                {{# rings:num }}
+                  {{# num == 2 }}
+                    {{# path.points():num }}
+                      <text text-anchor="middle" transform="{{ translate(.) }}">{{ labels[num] }}</text>
+                      <line x1="{{ x(.) }}" y1="{{ y(.) }}" x2="0" y2="0" stroke="gray" />
+                    {{/ end points }}
+                  {{/ end if }}
+                  {{^ num == 2 }}
+                    <path d="{{ path.print() }}" fill="none" stroke="gray" />
+                  {{/ end else }}
+                {{/ rings }}
+                {{# curves }}
+                  <path d="{{ polygon.path.print() }}" fill="rgba(123, 104, 238, 0.6)" stroke="rgb(123, 104, 238)" />
+                {{/ curves }}
+              {{/ end of radar}}
+            </g>
+          </svg>
+        </div>
+      </div>
+    </script>
+
+
+    <script src="common.js"></script>
+    <script src="ractive.js"></script>
+    <script type="text/jsx" src="react.jsx"></script>
+    <script src="angular.js"></script>
+  </body>
+</html>

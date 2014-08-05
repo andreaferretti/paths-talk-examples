@@ -1,0 +1,24 @@
+.row {
+  margin-top: 50px;
+}
+
+.panel-title {
+  display: inline;
+}
+
+#ractive text {
+    font-size: 10px;
+}
+
+#ractive .pokemon-info {
+  float: right;
+  min-width: 140px;
+  padding: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  background-color: #eeeeee;
+}
+
+#ractive .label {
+  float: right;
+}
